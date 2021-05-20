@@ -1,6 +1,12 @@
 # Pixhawk4 with MATLAB/Simulink
 Pixhawk4を使ってSimulinkでフライトコントローラを設計するための情報をまとめます．
 
+## 内容物
+* `/io_and_serial` ... センサ値読み込み，サーボモータPWM駆動，入力値のシリアル送信，を行うサンプルコードのフォルダ．  
+   * io_and_serial.slx ... Simulinkコード．これをPixhawk4に書き込む．250Hz（？要検証）で姿勢を計測し，取得したロール軸周りの角度に応じてサーボの角度指令値（PWMのデューティ比）を変化させる．同時にその信号をシリアルで送信する．  
+   * hardware_connection.jpg ... Pixhawk4，Power management board，電源，サーボモータの接続例．当コードでの動作確認時の構成．  
+   * main.m ... Pixhawk4がシリアル出力している信号をN回取得して表示するMATLABコード．COMポート番号を編集して使用すること．
+
 # Pixhawk4 をMatlabで開発するための環境構築メモ 
 
 ## Matlabの要件
