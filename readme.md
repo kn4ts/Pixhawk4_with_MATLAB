@@ -18,6 +18,8 @@ MATLABのインストール時に以下のツールボックスをインスト�
 4. Simulink Coder  
 5. Embedded Coder  
 
+※これらのインストール完了時に「コンパイラが必要です」と言われると思いますが，後述のtoolchainに含まれるので環境構築に問題はありません．
+
 MATLABインストール後に，次のPX4サポートをインストールする．
 
 * PX4 Autopilots Support from UAV toolbox ... https://jp.mathworks.com/hardware-support/px4-autopilots.html
