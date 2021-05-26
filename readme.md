@@ -37,7 +37,11 @@ __※注意__：インストール完了時に`Clone PX4 repository and Start Si
 
 ## SimulinkからPixhawk4のハードウェア設定を行う(初回のみ)
 ※ここからはPixhawk4のハードウェアが必要です．  
-MATLABを起動し，`ホーム`タブ中の`Simulink`ボタンを押す．
+MATLABを起動しコマンドウィンドウに以下を入力．（Simulinkスタートページから`UAV Toolbox Support Package for PX4 Autopilots`内のテンプレートを開いても同様の手順で設定可能です．）
+
+```
+open_system('px4demo_serial');
+```
 
 Simulinkが起動するので，上の`ハードウェア`タブの`ハードウェアボード`の表示下の窓を選択し→`別のハードウェアボードを選択`．  
 コンフィギュレーションパラメーターウィンドウが立ち上がるので，その中の`ハードウェアボード`表示の右の窓で`PX4 Pixhawk 4`を選択．`適用`→`OK`でウィンドウを閉じる．
@@ -53,7 +57,14 @@ Simulinkが起動するので，上の`ハードウェア`タブの`ハードウ
 6. `Customize PX4 System Startup`... Pixhawk4のスタートアップを設定するためにSDカードに設定ファイルを書き込む必要がある．Pixhawk4に挿入されているmicroSDカードを一旦抜いてPCに接続されたリーダに挿入し，SDカードのルート直下に`etc`フォルダを作成して，その中に`rc.txt`をコピーする．`rc.txt`のコピー元はMATLABのコマンドウィンドウに次のコマンドを入力すると見つかる．  
 ``` cd (fullfile(codertarget.pixhawk.internal.getSpPkgRootDir,'lib','etc')) ```  
 完了したらPixhawk4に挿し直す．  
-7. `Test Connection`... Pixhawk4の接続先COMポートを指定して，（初回のみ）ファームウェアをアプロードする．アップロード時にはPixhawk4との接続を切り，再度接続するように指示されるので従う．アップロードが成功したのち`Get Accelerometer data`ボタンで加速度センサの値を読める（らしいが，自分の環境ではうまくいかなかった...のであまり気にせずに）`次へ`．  
+7. `Test Connection`... Pixhawk4の接続先COMポートを指定して，（初回のみ）ファームウェアをアプロードする．アップロード時にはPixhawk4との接続を切り，再度接続するように指示 __※__ されるので従う． __※__ 指示が出なかったり，ファームウェアアップロードが進行中で先に進まなかったりしている場合，コマンドウィンドウに次のようなメッセージが出ているときは一度Pixhawk4を再接続すると先に進めることがあります．  
+
+   ```
+   Attempting reboot on COM〇〇 with baudrate=57600...  
+   If the board does not respond, unplug and re-plug the USB connector. 
+   ```
+
+アップロードが成功したのち`Get Accelerometer data`ボタンで加速度センサの値を読める（らしいが，自分の環境ではうまくいかなかった...のであまり気にせずに）`次へ`．  
 8. 以上で設定は完了です．
 
 ## 動作確認
