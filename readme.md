@@ -10,6 +10,9 @@ Pixhawk4を使ってSimulinkでフライトコントローラを設計するた�
 * hardware_connection.jpg ... Pixhawk4，Power management board，電源，サーボモータの接続例．当コードでの動作確認時の構成．  
 * main.m ... Pixhawk4がシリアル出力している信号をN回取得して表示するMATLABコード．COMポート番号を編集して使用すること．
 
+ハードウェア構成図
+![io_and_serialのハードウェア構成図](.\io_and_serial\hardware_connection.jpg)
+
 ### `propo_and_serial/`
 プロポ信号受信，サーボモータPWM駆動，入力値のシリアル送信，を行うサンプルコードのフォルダ．
 
@@ -17,6 +20,12 @@ Pixhawk4を使ってSimulinkでフライトコントローラを設計するた�
 * propo_tr.jpg ... 使用したプロポ送受信機の画像．送信機T6K，受信機R3006SB．
 * propo_connection.jpg ... プロポ受信機の接続例．当コードでの動作確認時の構成．受信機から`SBUS2`を使ってPixhawk4にデータ送信している（受信機側の設定は特になし，受信機の`SBUS2/B`の端子に接続するだけ．）．
 * main.m ... Pixhawk4がシリアル出力している信号をN回取得して表示するMATLABコード．COMポート番号を編集して使用すること．
+
+使用したプロポ送受信機
+![propo_and_serialで使用したプロポ送受信機](.\propo_and_serial\propo_tr.jpg)
+
+ハードウェア構成図
+![propo_and_serialのハードウェア構成図](.\propo_and_serial\propo_connection.jpg)
 
 この構成において確認した，プロポ送信機の各スイッチとSimulink内のプロポブロックの'Ch'端子の対応関係は以下の通り．  
 
@@ -26,10 +35,13 @@ Pixhawk4を使ってSimulinkでフライトコントローラを設計するた�
 | 左レバー上下 		|  `Ch2`| |
 | 右レバー上下 		|  `Ch3`| |
 | 左レバー左右 		|  `Ch4`| サーボ角度指令値 |
-| 右奥スイッチ（2段階）	|  `Ch5` と 'Ch8' | `Arm`状態の判定スイッチ（キルスイッチ）．手前に倒すとPWM出力ON，奥に倒すと停止． |
+| 右奥スイッチ（2段階）	|  `Ch5` と `Ch8` | `Arm`状態の判定スイッチ（キルスイッチ）．手前に倒すとPWM出力ON，奥に倒すと停止． |
 | 左手前スイッチ（3段階）	|  `Ch6`| |
 | 右手前スイッチ（3段階）	|  `Ch7`| |
 | 左奥スイッチ（3段階）	|  なし | |
+
+プロポ送信機のスイッチとSimulink内プロポブロック端子の対応関係   
+![プロポ送信機と`Ch`の対応関係](.\propo_and_serial\propo_chan.jpg)
 
 この構成の`SBUS2`を使用した場合，左奥スイッチがプロポブロックの`Ch1`～`Ch8`端子のどこにも対応していない．
 代わりに`Ch5`と`Ch8`がいずれも右奥スイッチに対応している．したがって実質7ch分の指令値を送信可能．
