@@ -2,11 +2,49 @@
 Pixhawk4を使ってSimulinkでフライトコントローラを設計するための情報をまとめます．
 
 ## 内容物
-* `/io_and_serial` ... センサ値読み込み，サーボモータPWM駆動，入力値のシリアル送信，を行うサンプルコードのフォルダ．  
-   ※Simulinkの`PX4 PWM Output`ブロックの挙動がPixhawkハード依存（？）で違うことが報告されています．PWM信号が出力されない場合は，当ブロックのプロパティで`MAIN (/dev/pwm_output0)`を`AUX (/dev/pwm_output1)`に切り替えるとPWM信号が出力されることがあります（要検証）．   
-   * io_and_serial.slx ... Simulinkコード．これをPixhawk4に書き込む．250Hz（？要検証）で姿勢を計測し，取得したロール軸周りの角度に応じてサーボの角度指令値（PWMのデューティ比）を変化させる．同時にその信号をシリアルで送信する．  
-   * hardware_connection.jpg ... Pixhawk4，Power management board，電源，サーボモータの接続例．当コードでの動作確認時の構成．  
-   * main.m ... Pixhawk4がシリアル出力している信号をN回取得して表示するMATLABコード．COMポート番号を編集して使用すること．
+### `io_and_serial/` 
+センサ値読み込み，サーボモータPWM駆動，入力値のシリアル送信，を行うサンプルコードのフォルダ．  
+※Simulinkの`PX4 PWM Output`ブロックの挙動がPixhawkハード依存（？）で異なることが報告されています．PWM信号が出力されない場合は，当ブロックのプロパティで`MAIN (/dev/pwm_output0)`を`AUX (/dev/pwm_output1)`に切り替えるとPWM信号が出力されることがあります（要検証）．   
+
+* io_and_serial.slx ... Simulinkコード．これをPixhawk4に書き込む．250Hz（？要検証）で姿勢を計測し，取得したロール軸周りの角度に応じてサーボの角度指令値（PWMのデューティ比）を変化させる．同時にその信号をシリアルで送信する．  
+* hardware_connection.jpg ... Pixhawk4，Power management board，電源，サーボモータの接続例．当コードでの動作確認時の構成．  
+* main.m ... Pixhawk4がシリアル出力している信号をN回取得して表示するMATLABコード．COMポート番号を編集して使用すること．
+
+ハードウェア構成図
+![io_and_serialのハードウェア構成図](https://github.com/kn4ts/Pixhawk4_with_MATLAB/blob/io_and_serial_w_propo/io_and_serial/hardware_connection.jpg)
+
+### `propo_and_serial/`
+プロポ信号受信，サーボモータPWM駆動，入力値のシリアル送信，を行うサンプルコードのフォルダ．
+
+* propo_and_serial.slx ... Simulinkコード．これをPixhawk4に書き込む．プロポの信号を受信し，それに応じて`Arm`状態の判別と，サーボの角度指令値の調整を行う．同時にその信号をシリアルで送信する．  
+* propo_tr.jpg ... 使用したプロポ送受信機の画像．送信機T6K，受信機R3006SB．
+* propo_connection.jpg ... プロポ受信機の接続例．当コードでの動作確認時の構成．受信機から`SBUS2`を使ってPixhawk4にデータ送信している（受信機側の設定は特になし，受信機の`SBUS2/B`の端子に接続するだけ．）．
+* main.m ... Pixhawk4がシリアル出力している信号をN回取得して表示するMATLABコード．COMポート番号を編集して使用すること．
+
+使用したプロポ送受信機
+![propo_and_serialで使用したプロポ送受信機](https://github.com/kn4ts/Pixhawk4_with_MATLAB/blob/io_and_serial_w_propo/propo_and_serial/propo_tr.jpg)
+
+ハードウェア構成図
+![propo_and_serialのハードウェア構成図](https://github.com/kn4ts/Pixhawk4_with_MATLAB/blob/io_and_serial_w_propo/propo_and_serial/propo_connection.jpg)
+
+この構成において確認した，プロポ送信機の各スイッチとSimulink内のプロポブロックの'Ch'端子の対応関係は以下の通り．  
+
+| 送信機側の各スイッチ | プロポブロックの出力端子 | サンプルコードでの役割 |
+| :-: | :-: | :-- |
+| 右レバー左右 		|  `Ch1`| |
+| 左レバー上下 		|  `Ch2`| |
+| 右レバー上下 		|  `Ch3`| |
+| 左レバー左右 		|  `Ch4`| サーボ角度指令値 |
+| 右奥スイッチ（2段階）	|  `Ch5` と `Ch8` | `Arm`状態の判定スイッチ（キルスイッチ）．手前に倒すとPWM出力ON，奥に倒すと停止． |
+| 左手前スイッチ（3段階）	|  `Ch6`| |
+| 右手前スイッチ（3段階）	|  `Ch7`| |
+| 左奥スイッチ（3段階）	|  なし | |
+
+プロポ送信機のスイッチとSimulink内プロポブロック端子の対応関係   
+![プロポ送信機と`Ch`の対応関係](https://github.com/kn4ts/Pixhawk4_with_MATLAB/blob/io_and_serial_w_propo/propo_and_serial/propo_chan.jpg)
+
+この構成の`SBUS2`を使用した場合，左奥スイッチがプロポブロックの`Ch1`～`Ch8`端子のどこにも対応していない．
+代わりに`Ch5`と`Ch8`がいずれも右奥スイッチに対応している．したがって実質7ch分の指令値を送信可能．
 
 # Pixhawk4 をMatlabで開発するための環境構築メモ 
 
