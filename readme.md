@@ -11,7 +11,7 @@ Pixhawk4を使ってSimulinkでフライトコントローラを設計するた�
 * main.m ... Pixhawk4がシリアル出力している信号をN回取得して表示するMATLABコード．COMポート番号を編集して使用すること．
 
 ハードウェア構成図
-![io_and_serialのハードウェア構成図](.\io_and_serial\hardware_connection.jpg)
+![io_and_serialのハードウェア構成図](https://github.com/kn4ts/Pixhawk4_with_MATLAB/blob/io_and_serial_w_propo/io_and_serial/hardware_connection.jpg)
 
 ### `propo_and_serial/`
 プロポ信号受信，サーボモータPWM駆動，入力値のシリアル送信，を行うサンプルコードのフォルダ．
@@ -22,10 +22,10 @@ Pixhawk4を使ってSimulinkでフライトコントローラを設計するた�
 * main.m ... Pixhawk4がシリアル出力している信号をN回取得して表示するMATLABコード．COMポート番号を編集して使用すること．
 
 使用したプロポ送受信機
-![propo_and_serialで使用したプロポ送受信機](.\propo_and_serial\propo_tr.jpg)
+![propo_and_serialで使用したプロポ送受信機](https://github.com/kn4ts/Pixhawk4_with_MATLAB/blob/io_and_serial_w_propo/propo_and_serial/propo_tr.jpg)
 
 ハードウェア構成図
-![propo_and_serialのハードウェア構成図](.\propo_and_serial\propo_connection.jpg)
+![propo_and_serialのハードウェア構成図](https://github.com/kn4ts/Pixhawk4_with_MATLAB/blob/io_and_serial_w_propo/propo_and_serial/propo_connection.jpg)
 
 この構成において確認した，プロポ送信機の各スイッチとSimulink内のプロポブロックの'Ch'端子の対応関係は以下の通り．  
 
@@ -41,7 +41,7 @@ Pixhawk4を使ってSimulinkでフライトコントローラを設計するた�
 | 左奥スイッチ（3段階）	|  なし | |
 
 プロポ送信機のスイッチとSimulink内プロポブロック端子の対応関係   
-![プロポ送信機と`Ch`の対応関係](.\propo_and_serial\propo_chan.jpg)
+![プロポ送信機と`Ch`の対応関係](https://github.com/kn4ts/Pixhawk4_with_MATLAB/blob/io_and_serial_w_propo/propo_and_serial/propo_chan.jpg)
 
 この構成の`SBUS2`を使用した場合，左奥スイッチがプロポブロックの`Ch1`～`Ch8`端子のどこにも対応していない．
 代わりに`Ch5`と`Ch8`がいずれも右奥スイッチに対応している．したがって実質7ch分の指令値を送信可能．
