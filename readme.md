@@ -46,6 +46,16 @@ Pixhawk4を使ってSimulinkでフライトコントローラを設計するた�
 この構成の`SBUS2`を使用した場合，左奥スイッチがプロポブロックの`Ch1`～`Ch8`端子のどこにも対応していない．
 代わりに`Ch5`と`Ch8`がいずれも右奥スイッチに対応している．したがって実質7ch分の指令値を送信可能．
 
+# ハードウェア関連のセットアップメモ
+## ESCのキャリブレーション
+QGroundControlでESCをキャリブレーションする方法  
+
+1. ESCの配線...ESCの信号線を配電盤`FMU-PWM-out`の1～4に接続する．電源線も配電盤に接続する．Pixhawk<->配電盤の接続はPixhawk側`I/O PWM OUT` <-> 配電盤側`FMU-PWM-in`とする．
+2. （念のため）QGCでファームウェア初期化する．
+3. QGCにPixhawkを接続し，設定画面の`Power` -> `ESC PWM Minimum and Maximum Calibration` 中の`Calibrate`ボタンを押して，出てくるウィンドウの指示にしたがう．
+4. バッテリーを繋いだ状態でESCからBeep音がしなくなっていればキャリブレーションは成功している．
+
+
 # Pixhawk4 をMatlabで開発するための環境構築メモ 
 
 ## Matlabの要件
