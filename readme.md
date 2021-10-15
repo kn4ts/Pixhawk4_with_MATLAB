@@ -13,6 +13,16 @@ Pixhawk4を使ってSimulinkでフライトコントローラを設計するた�
 ハードウェア構成図
 ![io_and_serialのハードウェア構成図](https://github.com/kn4ts/Pixhawk4_with_MATLAB/blob/io_and_serial_w_propo/io_and_serial/hardware_connection.jpg)
 
+### `io_and_serial_w_TELEM/`
+基本的な動作は`io_and_serial/`と同じです．
+センサ値読み込み，サーボモータPWM駆動，入力値のシリアル送信，を行うサンプルコード．  
+シリアル送信はPixhawk4の`USB micro B`端子に加えて，`TELEM 1`，`TELEM 2`端子の計3箇所から出力する．
+`micro B`端子と`TELEM 2`はBaudrate:115200で，`TELEM1`はBaudrate:57600で出力するように設定している．
+※Pixhawk4のTELEM端子から直接USB-Serial変換ケーブルを介して通信し，計測値を読めることを確認した(書き込み環境：MATLAB 2021a)．
+
+* io_and_serial_telem.slx ... Simulinkコード．これをPixhawk4に書き込む．250Hz（？要検証）で姿勢を計測し，取得したロール軸周りの角度に応じてサーボの角度指令値（PWMのデューティ比）を変化させる．同時にその信号を3つのシリアルで送信する．  
+* main.m ... Pixhawk4がシリアル出力している信号をN回取得して表示するMATLABコード．COMポート番号，Baudrateを編集して使用すること．
+
 ### `propo_and_serial/`
 プロポ信号受信，サーボモータPWM駆動，入力値のシリアル送信，を行うサンプルコードのフォルダ．
 
