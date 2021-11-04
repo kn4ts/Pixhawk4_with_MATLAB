@@ -19,7 +19,7 @@ s.BaudRate = 115200;
 %s.BaudRate = 9600;
 
 % 送信されてくるデータの長さを指定
-expectedDataLength = 80;
+expectedDataLength = 72;
 
 % 読み込み回数を指定
 N = 1000;
